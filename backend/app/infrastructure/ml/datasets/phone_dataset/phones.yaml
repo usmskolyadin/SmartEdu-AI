@@ -1,0 +1,7 @@
+path: infrastructure/ml/datasets/phone_dataset
+
+train: train/images
+val: val/images
+
+names:
+  0: mobile_phone
