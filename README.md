@@ -1,5 +1,5 @@
 # SmartEdu AI - About project
-This project contains smart computer vision for detecting peoples and their phons, which can help track cheating on important exams or, in the future, in classes so that the younger generation learns to think independently. More about the idea - [LinkedIn Post](https://www.linkedin.com/feed/update/urn:li:activity:7428188032777986048/)
+This project contains smart computer vision for detecting peoples and their phons, which can help track cheating on important exams or, in the future, in classes so that the younger generation learns to think independently. More about the idea - [LinkedIn Post](https://www.linkedin.com/feed/update/urn:li:activity:7428188032777986048/){:target="_blank"}
 
 ## Contains
 - Computer vision (Train on one's own dataset & ultralytics library)
