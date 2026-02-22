@@ -7,8 +7,7 @@ from app.core.config import settings
 
 class YoloService:
     def __init__(self):
-        self.person_model = YOLO(settings.YOLO_COCO_MODEL_PATH)
-        self.phone_model = YOLO(settings.YOLO_PHONE_MODEL_PATH)
+        self.model = YOLO(settings.YOLO_COCO_MODEL_PATH)
 
     @staticmethod
     def decode_base64_image(img_base64: str) -> np.ndarray:
@@ -19,10 +18,13 @@ class YoloService:
     def detect(self, img: np.ndarray):
         detections = []
 
-        res_person = self.person_model(img, conf=settings.YOLO_PERSON_CONF, verbose=False)[0]
-        for box, cls_id, conf in zip(res_person.boxes.xyxy, res_person.boxes.cls, res_person.boxes.conf):
-            if int(cls_id) == 0:
-                x1, y1, x2, y2 = map(int, box)
+        results = self.model(img, conf=settings.YOLO_PERSON_CONF, verbose=False)[0]
+
+        for box, cls_id, conf in zip(results.boxes.xyxy, results.boxes.cls, results.boxes.conf):
+            x1, y1, x2, y2 = map(int, box)
+            cls_id = int(cls_id)
+
+            if cls_id == 0:
                 detections.append({
                     "x": x1,
                     "y": y1,
@@ -32,19 +34,16 @@ class YoloService:
                     "conf": float(conf)
                 })
 
-        res_phone = self.phone_model(img, conf=settings.YOLO_PHONE_CONF, verbose=False)[0]
-        for box, cls_id, conf in zip(res_phone.boxes.xyxy, res_phone.boxes.cls, res_phone.boxes.conf):
-            x1, y1, x2, y2 = map(int, box)
-            detections.append({
-                "x": x1,
-                "y": y1,
-                "w": x2 - x1,
-                "h": y2 - y1,
-                "type": "phone",
-                "conf": float(conf)
-            })
+            elif cls_id == 67:
+                detections.append({
+                    "x": x1,
+                    "y": y1,
+                    "w": x2 - x1,
+                    "h": y2 - y1,
+                    "type": "phone",
+                    "conf": float(conf)
+                })
 
         return detections
-
-
+    
 yolo_service = YoloService()

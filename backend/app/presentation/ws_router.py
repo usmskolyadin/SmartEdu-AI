@@ -17,6 +17,7 @@ async def websocket_endpoint(ws: WebSocket):
             ]
 
             await ws.send_json({"objects": payload})
+            
     except WebSocketDisconnect:
         pass
     except Exception as e:
