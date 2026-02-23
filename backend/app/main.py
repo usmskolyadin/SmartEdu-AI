@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from backend.app.presentation import ws_router
+from app.presentation import ws_router
 
 app = FastAPI(title="EduAI Backend")
 
